@@ -35,10 +35,12 @@ Find the `"performances"` section in `data.json`. To add a new event, copy an ex
   "time": "2:00 PM - 3:00 PM",
   "location": "Oakmont Senior Living",
   "description": "An afternoon of jazz classics for the residents.",
-  "tags": ["Community Event", "Private Performance"]
+  "tags": ["Community Event", "Private Performance"],
+  "year": 2025
 }
 ```
 
+-   `year`: Required. Performances are automatically sorted into "Upcoming" and "Past" using `day`, `month`, and `year`.
 -   **Important:** Don't forget the comma `,` between each performance block.
 
 ---
@@ -66,13 +68,14 @@ Find the `"gallery"` section in `data.json`. Copy and paste a block and update t
   "type": "image",
   "category": "performances",
   "url": "images/my-cool-photo.jpg",
-  "title": "Spring Concert"
+  "title": "Spring Concert",
+  "performance": "Spring Jazz Concert"
 }
 ```
 
--   `category`: Must be one of `recent`, `performances`, `rehearsals`, or `members`. This decides which tab it appears under.
+-   `performance`: Must exactly match the `title` of a performance. The image appears in that performance's photo gallery (opened by clicking the performance card).
 -   `url`: Must be `images/` followed by the exact filename you uploaded.
--   `title`: The text that appears when you hover over the image.
+-   `title`: Used as the image's alt text.
 
 **To add a VIDEO (from YouTube or Google Drive):**
 
@@ -91,8 +94,8 @@ You need an **embed link** for videos.
 ```
 
 -   `type`: Must be `"video"`.
--   `category`: Same as for images.
 -   `embedUrl`: The special embed link you copied.
+-   **Note:** The site currently only displays `"image"` items; video items are not shown.
 
 ---
 
@@ -129,16 +132,15 @@ For those comfortable with code, you can run a local server to see your changes 
 - **Responsive Design**: Fully responsive layout that works on all devices
 - **Modern UI/UX**: Clean, student-friendly design with smooth animations
 - **Interactive Navigation**: Smooth scrolling and mobile-friendly hamburger menu
-- **Performance Showcase**: Display upcoming student performances with countdown timers
-- **Photo Gallery**: Tabbed gallery system for different categories of photos
-- **Membership System**: Complete sign-up form for new club members
+- **Performance Showcase**: Upcoming and past performances, automatically sorted by date
+- **Photo Gallery**: Per-performance photo gallery shown in a modal when a performance card is clicked
 - **Contact Information**: Easy-to-find contact details for club leaders and faculty advisor
 - **Social Media Integration**: Links to social media platforms
 - **Performance Optimized**: Fast loading with optimized assets
 
 ## 🚀 Live Demo
 
-Visit the live website: [Your GitHub Pages URL will appear here after deployment]
+Visit the live website: [https://samarth-rao.github.io/Jazz-Club-Website/](https://samarth-rao.github.io/Jazz-Club-Website/)
 
 ## 📁 Project Structure
 
@@ -163,14 +165,13 @@ jazz-club-website/
 - **Color Scheme**: Dougherty Valley Blue (#1C3B8A) with Gold accents (#FFC72C)
 - **Typography**: Elegant serif fonts for headings, clean sans-serif for body text
 - **Animations**: Smooth scroll animations and hover effects
-- **Parallax**: Subtle parallax effect on the hero section
+- **Hero Slideshow**: Rotating hero background images (from `heroImages` in `data.json`)
 - **Glass Morphism**: Modern backdrop blur effects
 
 ## 📱 Responsive Breakpoints
 
-- **Desktop**: 1200px and above
-- **Tablet**: 768px - 1199px
-- **Mobile**: 767px and below
+- **Tablet/Mobile**: 768px and below
+- **Small Mobile**: 480px and below
 
 ## 🎯 Website Sections
 
@@ -184,32 +185,20 @@ jazz-club-website/
 - Placeholder for rehearsal photos
 
 ### Performances
-- Upcoming student performances
-- Performance details including location, time, and admission info
+- Upcoming and past performances (loaded from `data.json`)
+- Performance details including location, time, and description
 - Tags for event types (free, community event, etc.)
-
-### Gallery
-- Tabbed photo gallery with categories:
-  - Recent Events
-  - Performances
-  - Rehearsals
-  - Club Members
-- Placeholder images ready for real photos
+- Click a performance to open its photo gallery
 
 ### Join Us
 - Benefits of joining the club
 - Meeting times and location
-- Comprehensive sign-up form with:
-  - Student information
-  - Grade level
-  - Instrument selection
-  - Experience level
+- Links to Discord, Instagram, and email
 
 ### Contact
 - Faculty advisor information
-- Club leadership details
+- Club leadership details (loaded from `data.json`)
 - Meeting location and times
-- Contact form for general inquiries
 
 ## 🚀 Deployment to GitHub Pages
 
@@ -233,7 +222,7 @@ jazz-club-website/
    - Click "Save"
 
 4. **Access Your Website**:
-   - Your website will be available at: `https://yourusername.github.io/repository-name`
+   - Your website will be available at: `https://yourusername.github.io/repository-name` (this repository is deployed at `https://samarth-rao.github.io/Jazz-Club-Website/`)
 
 ### Option 2: Manual Setup
 
@@ -259,29 +248,21 @@ git push -u origin main
 ## 🔧 Customization
 
 ### Changing Colors
-Edit the CSS variables in `styles.css`:
-```css
-:root {
-    --primary-color: #1C3B8A;
-    --accent-color: #FFC72C;
-    --text-color: #333;
-}
-```
+Colors are hardcoded throughout `styles.css` (primary blue `#1C3B8A`, gold accent `#FFC72C`); find and replace these values to change them.
 
 ### Updating Content
 - **Club Information**: Edit the content in `index.html`
-- **Performances**: Update the performances section with your actual events
-- **Meeting Times**: Modify the meeting schedule and location (currently P124, Wednesdays after school)
-- **Contact Details**: Update faculty advisor, club leadership, and email (currently dvjazzclub@gmail.com)
+- **Performances**: Edit the `performances` list in `data.json`
+- **Meeting Times**: Modify the meeting schedule and location (in `index.html`, plus the "Meetings" text in `script.js`)
+- **Contact Details**: Update faculty advisor and club leadership in the `officers` section of `data.json`; the email (currently dvjazzclub@gmail.com) is in `index.html`
 
 ### Adding Real Photos
-1. Replace the placeholder images in the gallery sections
-2. Update the hero background image URL in `styles.css`
-3. Add your own photos to the project folder
-4. Update the image placeholders with actual `<img>` tags
+1. Upload photos to the `images` folder
+2. Add them to the `gallery` list in `data.json` (see "How to Add Photos & Videos to the Gallery" above)
+3. Update the hero slideshow images in the `heroImages` list in `data.json`
 
 ### Customizing Forms
-The forms currently simulate submission. To make them functional:
+The site currently has no forms (the Join and Contact sections link to Discord, Instagram, and email). To add functional forms:
 
 1. **Backend Integration**: Connect to a backend service (Node.js, PHP, etc.)
 2. **Email Service**: Use services like EmailJS, Formspree, or Netlify Forms
@@ -303,39 +284,10 @@ emailjs.send("service_id", "template_id", {
 ## 🎵 For Jazz Club Leaders
 
 ### Adding Performances
-Update the performances section in `index.html`:
-```html
-<div class="performance-card">
-    <div class="performance-date">
-        <span class="day">15</span>
-        <span class="month">MAR</span>
-    </div>
-    <div class="performance-details">
-        <h3>Spring Concert</h3>
-        <p class="performance-time"><i class="far fa-clock"></i> 7:00 PM - 9:00 PM</p>
-        <p class="performance-location"><i class="fas fa-map-marker-alt"></i> School Auditorium</p>
-        <p class="performance-description">Description of the performance...</p>
-        <div class="performance-tags">
-            <span class="tag">Free Event</span>
-            <span class="tag">All Ages</span>
-        </div>
-    </div>
-</div>
-```
+Add an entry to the `performances` list in `data.json` (see "How to Add a New Performance" above).
 
 ### Managing Gallery
-Organize photos into the four categories:
-- Recent Events
-- Performances
-- Rehearsals
-- Club Members
-
-Replace placeholder divs with actual images:
-```html
-<div class="gallery-item">
-    <img src="path/to/your/image.jpg" alt="Description">
-</div>
-```
+Add images to the `gallery` list in `data.json`, linking each to a performance via its `performance` field (see "How to Add Photos & Videos to the Gallery" above).
 
 ## 🌟 Browser Support
 
