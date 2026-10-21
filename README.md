@@ -238,8 +238,8 @@ git add .
 # Commit changes
 git commit -m "Initial commit: Dougherty Valley High School jazz club website"
 
-# Add remote repository (replace with your GitHub repo URL)
-git remote add origin https://github.com/yourusername/dougherty-valley-jazz-club.git
+# Add remote repository
+git remote add origin https://github.com/Samarth-Rao/Jazz-Club-Website.git
 
 # Push to GitHub
 git push -u origin main
